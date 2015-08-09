@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="icon" href="../../favicon.ico">
+
+	<title><%= title %></title>
+
+	<!-- Bootstrap core CSS -->
+	<link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Custom styles for this template -->
+	<link href="stylesheets/home.css" rel="stylesheet">
+
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  <body>
+
+  	<div class="container">
+  		<div class="header clearfix">
+  			<nav>
+  				<ul class="nav nav-pills pull-right">
+  					<li role="presentation" class="active"><a href="/home">Home</a></li>
+  					<li role="presentation"><a href="/home/logout">Sign out <%if (typeof name !== "undefined") { %> 
+              <%= name %>
+             <% } %></a></li>
+  					<!-- <li role="presentation"><a href="#">Admin</a></li> -->
+  				</ul>
+  			</nav>
+  			<h3 class="text-muted"><%= title %></h3>
+  		</div>
+
+      <%if (typeof message !== "undefined") { %>
+        <p class="text-success"><%= message %></p>
+      <% } %>
+
+		<div class="button row">
+			<div class="col-sm-9">
+				<p>Create a new campaign to advertise through us!</p>
+			</div>
+			<div class="col-sm-3">
+				<button class="new-campaign btn btn-primary btn-block btn-success">New Campaign</button>
+			</div>
+			<div style="height: 60px;"></div>
+		</div>
+
+		<div class="newForm" style="display:none;">
+			<div class="step1">
+				<div class="form-group">
+					<h4>Step 1: Campaign Details</h4>
+					<label for="campaignName">Name</label>
+					<input type="text" id="campaignName" class="form-control" placeholder="Campaign Name">
+					<br/>
+					<label for="description">Description</label>
+					<input type="text" id="description" class="form-control" placeholder="Description">
+				</div>
+				<button class="next-step1 btn btn-primary btn-block btn-success">Next</button>
+			</div>
+			<div class="step2" >
+				<div class="form-group" >
+					<h4>Step 2: Campaign Platforms</h4>					
+					<div class="checkbox">
+					  <label><input type="checkbox" name="platform" value="facebook">Facebook</label>
+					</div>
+					<div class="checkbox">
+					  <label><input type="checkbox" name="platform" value="google">Google</label>
+					</div>
+					<div class="checkbox">
+					  <label><input type="checkbox" name="platform" value="yahoo">Yahoo</label>
+					</div>
+				</div>
+				<button class="next-step2 btn btn-primary btn-block btn-success">Next</button>
+			</div>
+			<div class="step3">
+				<div class="form-group">
+					<h4>Step 1: Running Dates</h4>
+					<label for="from">From</label>
+					<input type="date" id="from" class="form-control" placeholder="Starting Day">
+					<br/>
+					<label for="to">To</label>
+					<input type="date" id="to" class="form-control" placeholder="Ending Day">
+				</div>
+				<button class="finish btn btn-primary btn-block btn-success">Finish</button>
+			</div>
+		</div>
+    <hr>
+    <%if (typeof data !== "undefined") { %>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Serial</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th>To</th>
+              <th>From</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for(var i=0; i < data.length; i++) { %>
+               <tr>
+                 <td><%= data[i].id %></td>
+                 <td><%= data[i].name %></td>
+                 <td><%= data[i].description %></td>
+                 <td><%= data[i].to %></td>
+                 <td><%= data[i].from %></td>
+               </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    <% } %>
+  		 
+
+  		<footer class="footer">
+  			<p>All Rights Reserved. &copy; <%= title %> 2015</p>
+  		</footer>
+
+  	</div> <!-- /container -->
+  	<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+  	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  	<script>
+  	Date.prototype.toDateInputValue = (function() {
+  	    var local = new Date(this);
+  	    local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+  	    return local.toJSON().slice(0,10);
+  	});
+
+  	$(function(){
+  		$('input[type="date"]').val(new Date().toDateInputValue());
+
+  		$('.new-campaign').on('click', function(){
+  			$('.newForm, .step1').show();
+  			$('.new-campaign, .step2, .step3').hide();
+  		});
+
+  		$('.next-step1').on('click', function(){
+  			if($('#campaignName').val().length && $("#description").val().length){
+  				$(this).removeClass('btn-danger').addClass('btn-success');
+  				$('.step1').hide();
+  				$('.step2').show();
+  			} else $(this).removeClass('btn-success').addClass('btn-danger');
+  		});
+
+  		$('.next-step2').on('click', function(){
+  			if($("input[name='platform']:checked").length){
+  				$(this).removeClass('btn-danger').addClass('btn-success');
+  				$('.step2').hide();
+  				$('.step3').show();
+  			} else $(this).removeClass('btn-success').addClass('btn-danger');
+  			
+  		});
+
+  		$('.finish').on('click', function(){
+  			$('.step3, .newForm').hide();
+  			$('.new-campaign').show();
+
+  			var campaignName = $("#campaignName").val();
+  			var description = $("#description").val();
+  			var platforms = "";
+  			$.each($("input[name='platform']:checked"), function(el){
+  				if(platforms === "") platforms += $(this).val();
+  				else platforms += ","+$(this).val();
+  			});
+  			var from = $("#from").val();
+  			var to = $("#to").val();
+
+  			$.post('/home/campaign',{
+  				name : campaignName,
+  				description : description,
+  				platforms : platforms,
+  				from : from,
+  				to : to
+  			}).success(function(response){
+  				location.href = location.href;
+  			}).error(function(response){
+  				location.href = location.href;
+  			});
+
+  		});
+
+  	});
+  	</script>
+  </body>
+  </html>
