@@ -51,14 +51,6 @@ app.use(function(req, res, next) {
 global.query = query;
 
 if(app.get('env') === 'development'){
-  // query.connectionParameters = {
-  //   "user": "adv_user",
-  //   "password": "123456",
-  //   "database": "adv_db",
-  //   "host": "127.0.0.1",
-    // "port": "5432"
-  // };
-
   query.connectionParameters = {
     "user": "ccjsmmdhfspinl",
     "password": "KWUPW9JHoz0UORiKUpNIMLVdJD",
@@ -67,14 +59,6 @@ if(app.get('env') === 'development'){
     "port": "5432"
   };
   
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
-  });
-
 } else {
   console.log("running on production");
   query.connectionParameters = "postgres://ccjsmmdhfspinl:KWUPW9JHoz0UORiKUpNIMLVdJD@ec2-54-204-3-200.compute-1.amazonaws.com:5432/d1sebsoa5t03pk" || {
@@ -87,6 +71,14 @@ if(app.get('env') === 'development'){
 }
 
 // production error handler
+app.use(function(err, req, res, next) {
+  res.status(err.status || 500);
+  res.render('error', {
+    message: err.message,
+    error: err
+  });
+});
+
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
