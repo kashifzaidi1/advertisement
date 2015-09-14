@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="icon" href="../../favicon.ico">
+
+	<title><%= title %></title>
+
+	<!-- Bootstrap core CSS -->
+	<link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Custom styles for this template -->
+	<link href="/stylesheets/home.css" rel="stylesheet">
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  <body>
+
+  	<div class="container">
+  		<div class="header clearfix">
+  			<nav>
+  				<ul class="nav nav-pills pull-right">
+  					<!-- <li role="presentation" class="active"><a href="/home">Home</a></li> -->
+  					<li role="presentation"><a href="/home/logout">Sign out <%if (typeof name !== "undefined") { %> 
+              <%= name %>
+             <% } %></a></li>
+  					<!-- <li role="presentation"><a href="#">Admin</a></li> -->
+  				</ul>
+  			</nav>
+  			<h3 class="text-muted"><%= title %></h3>
+  		</div>
+
+      <div class="editForm" style="display:none;">
+        <form action="/employee/edit_campaign" id="editForm" method="POST">
+          <div class="form-group">
+            <label for="editName">Name</label>
+            <input type="text" name="name" id="editName" class="form-control" required placeholder="Campaign Name">
+            <br/>
+            <label for="editDescription">Description</label>
+            <input type="text" name="description" id="editDescription" class="form-control" required placeholder="Campaign Description">
+            <br/>
+            <input type="hidden" name="id" value="" id="id"/>
+            <label for="editPlatforms">Platforms</label>
+            <input type="text" name="platforms" id="editPlatforms" class="form-control" required placeholder="Campaign Platforms">
+          </div>
+          <button type="submit" class="btn btn-primary btn-block btn-success edit-button">Update</button>    
+        </form>
+      <br/><br/>
+      </div>
+      
+      <%if (typeof message !== "undefined") { %>
+        <p class="text-success"><%= message %></p>
+      <% } %>
+
+	
+    <hr>
+    <%if (typeof data !== "undefined") { %>
+      <h3 class="text-success">Campaigns List</h3>
+      <hr>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Serial</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Platforms</th>
+              <th>To</th>
+              <th>From</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for(var i=0; i < data.length; i++) { %>
+               <tr>
+                 <td><%= data[i].id %></td>
+                 <td><%= data[i].name %></td>
+                 <td><%= data[i].description %></td>
+                 <td><%= data[i].platforms %></td>
+                 <td><%= data[i].to %></td>
+                 <td><%= data[i].from %></td>
+                 <td><button data-id="<%= data[i].id %>" data-name="<%= data[i].name %>" data-description="<%= data[i].description %>" data-platforms="<%= data[i].platforms %>" class="btn btn-warning editOption">Edit</button></td>
+                 <td><button data-id="<%= data[i].id %>" class="btn btn-danger deleteOption">Delete</button></td>
+               </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    <% } %>
+  		 
+
+  		<footer class="footer">
+        <hr>
+        <a href="/employee">Employees Sign in</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="/admin">Admin Sign in</a>
+        <hr>
+  			<p>All Rights Reserved. &copy; <%= title %> 2015</p>
+  		</footer>
+
+  	</div> <!-- /container -->
+  	<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+  	<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  	<script>
+
+  	$(function(){
+
+      $('.editOption').on('click', function(e){
+        var id = $(this).attr('data-id');
+        var name = $(this).attr('data-name');
+        var description = $(this).attr('data-description');
+        var platforms = $(this).attr('data-platforms');
+        
+        $('#id').val(id);
+        $('#editName').val(name);
+        $('#editDescription').val(description);
+        $('#editPlatforms').val(platforms);
+        
+
+        $('.editForm').show();
+        $('.newForm').hide();
+      });
+
+      $('.deleteOption').on('click', function(e){
+        var id= $(this).attr('data-id');
+        $.post('/employee/delete_campaign',{
+          id : id
+        }).success(function(response){
+          location.href = location.href;
+        }).error(function(response){
+          location.href = location.href;
+        });
+      });
+
+      $('#editForm').on('submit', function(e){
+
+        var name = $('#editName').val();
+        var description = $('#editDescription').val();
+        var platforms = $('#editPlatforms').val();
+
+        if(name.length < 1 || description.length < 1 || platforms.length < 1){
+          e.preventDefault();
+          $('.edit-button').removeClass('button-success').addClass('button-danger');
+        } else {
+          $('.edit-button').removeClass('button-danger').addClass('button-success');
+        }
+
+      });
+
+  	});
+  	</script>
+  </body>
+  </html>

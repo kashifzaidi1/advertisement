@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="icon" href="../../favicon.ico">
+
+	<title><%= title %></title>
+
+	<!-- Bootstrap core CSS -->
+	<link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Custom styles for this template -->
+	<link href="/stylesheets/home.css" rel="stylesheet">
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  <body>
+
+  	<div class="container">
+  		<div class="header clearfix">
+  			<nav>
+  				<ul class="nav nav-pills pull-right">
+  					<!-- <li role="presentation" class="active"><a href="/home">Home</a></li> -->
+  					<li role="presentation"><a href="/home/logout">Sign out <%if (typeof name !== "undefined") { %> 
+              <%= name %>
+             <% } %></a></li>
+  					<!-- <li role="presentation"><a href="#">Admin</a></li> -->
+  				</ul>
+  			</nav>
+  			<h3 class="text-muted"><%= title %></h3>
+  		</div>
+
+      <div class="newForm" style="display:none;">
+        <form action="/admin/add_employee" id="employeeForm" method="POST">
+          <div class="form-group">
+            <label for="employeeName">Name</label>
+            <input type="text" name="name" id="employeeName" class="form-control" required placeholder="Employee Name">
+            <br/>
+            <label for="employeeEmail">Email</label>
+            <input type="email" name="email" id="employeeEmail" class="form-control" required placeholder="Employee Email">
+            <br/>
+            <label for="employeePassword">Password</label>
+            <input type="password" name="password" id="employeePassword" class="form-control" required placeholder="Employee Password">
+          </div>
+          <button type="submit" class="btn btn-primary btn-block btn-success save-button">Save</button>    
+        </form>
+      </div>
+
+      <div class="editForm" style="display:none;">
+        <form action="/admin/edit_employee" id="editForm" method="POST">
+          <div class="form-group">
+            <label for="employeeName">Name</label>
+            <input type="text" name="name" id="editName" class="form-control" required placeholder="Employee Name">
+            <br/>
+            <label for="employeeEmail">Email</label>
+            <input type="email" name="email" id="editEmail" class="form-control" required placeholder="Employee Email">
+            <br/>
+            <input type="hidden" name="id" value="" id="id"/>
+            <label for="employeePassword">Password</label>
+            <input type="password" name="password" id="editPassword" class="form-control" required placeholder="Employee Password">
+          </div>
+          <button type="submit" class="btn btn-primary btn-block btn-success edit-button">Update</button>    
+        </form>
+      <br/><br/>
+      </div>
+      
+      <%if (typeof message !== "undefined") { %>
+        <p class="text-success"><%= message %></p>
+      <% } %>
+
+		<div class="button row new-button-div">
+			<div class="col-sm-9">
+				<p>Add a new Employee!</p>
+			</div>
+			<div class="col-sm-3">
+				<button class="new-campaign btn btn-primary btn-block btn-success">New Employee</button>
+			</div>
+			<div style="height: 60px;"></div>
+		</div>
+
+	
+    <hr>
+    <%if (typeof data !== "undefined") { %>
+      <h3 class="text-success">Employees List</h3>
+      <hr>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Serial</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for(var i=0; i < data.length; i++) { %>
+               <tr>
+                 <td><%= data[i].id %></td>
+                 <td><%= data[i].name %></td>
+                 <td><%= data[i].email %></td>
+                 <td><button data-id="<%= data[i].id %>" data-name="<%= data[i].name %>" data-email="<%= data[i].email %>" class="btn btn-warning editOption">Edit</button></td>
+                 <td><button data-id="<%= data[i].id %>" data-name="<%= data[i].name %>" data-email="<%= data[i].email %>"  class="btn btn-danger deleteOption">Delete</button></td>
+               </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    <% } %>
+  		 
+
+  		<footer class="footer">
+        <hr>
+        <a href="/employee">Employees Sign in</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="/admin">Admin Sign in</a>
+        <hr>
+  			<p>All Rights Reserved. &copy; <%= title %> 2015</p>
+  		</footer>
+
+  	</div> <!-- /container -->
+  	<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+  	<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  	<script>
+
+  	$(function(){
+
+      $('.new-campaign').on('click', function(e){
+        $('.newForm').show();
+        $('.new-button-div').hide();
+        $('.editForm').hide();
+      });
+
+      $('#employeeForm').on('submit', function(e){
+
+        var name = $('#employeeName').val();
+        var email = $('#employeeEmail').val();
+        var password = $('#employeePassword').val();
+
+        if(name.length < 1 || email.length < 1 || password.length < 1){
+          e.preventDefault();
+          $('.save-button').removeClass('button-success').addClass('button-danger');
+        } else {
+          $('.save-button').removeClass('button-danger').addClass('button-success');
+        }
+
+      });
+
+      $('.editOption').on('click', function(e){
+        var id = $(this).attr('data-id');
+        var name = $(this).attr('data-name');
+        var email = $(this).attr('data-email');
+
+        $('#editName').val(name);
+        $('#editEmail').val(email);
+        $('#id').val(id);
+
+        $('.editForm').show();
+        $('.newForm').hide();
+      });
+
+      $('.deleteOption').on('click', function(e){
+        var id= $(this).attr('data-id');
+        $.post('/admin/delete_employee',{
+          id : id
+        }).success(function(response){
+          location.href = location.href;
+        }).error(function(response){
+          location.href = location.href;
+        });
+      });
+
+      $('#editForm').on('submit', function(e){
+
+        var name = $('#editName').val();
+        var email = $('#editEmail').val();
+        var password = $('#editPassword').val();
+
+        if(name.length < 1 || email.length < 1 || password.length < 1){
+          e.preventDefault();
+          $('.edit-button').removeClass('button-success').addClass('button-danger');
+        } else {
+          $('.edit-button').removeClass('button-danger').addClass('button-success');
+        }
+
+      });
+
+  	});
+  	</script>
+  </body>
+  </html>

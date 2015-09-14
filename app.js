@@ -14,6 +14,8 @@ var routes = require('./routes/index');
 var signin = require('./routes/signin');
 var signup = require('./routes/signup');
 var home = require('./routes/home');
+var admin = require('./routes/admin');
+var employee = require('./routes/employee');
 
 var app = express();
 
@@ -39,6 +41,8 @@ app.use('/', routes);
 app.use('/signin', signin);
 app.use('/signup', signup);
 app.use('/home', home);
+app.use('/admin', admin);
+app.use('/employee', employee);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -51,12 +55,14 @@ app.use(function(req, res, next) {
 global.query = query;
 
 if(app.get('env') === 'development'){
+  console.log("running on development");
   query.connectionParameters = {
     "user": "ccjsmmdhfspinl",
     "password": "KWUPW9JHoz0UORiKUpNIMLVdJD",
     "database": "d1sebsoa5t03pk",
     "host": "ec2-54-204-3-200.compute-1.amazonaws.com",
-    "port": "5432"
+    "port": "5432",
+    "ssl": true
   };
   
 } else {
@@ -66,7 +72,8 @@ if(app.get('env') === 'development'){
     "password": "KWUPW9JHoz0UORiKUpNIMLVdJD",
     "database": "d1sebsoa5t03pk",
     "host": "ec2-54-204-3-200.compute-1.amazonaws.com",
-    "port": "5432"
+    "port": "5432",
+    "ssl": true
   }
 }
 

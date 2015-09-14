@@ -12,10 +12,10 @@
 	<title><%= title %></title>
 
 	<!-- Bootstrap core CSS -->
-	<link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
 	<!-- Custom styles for this template -->
-	<link href="stylesheets/home.css" rel="stylesheet">
+	<link href="/stylesheets/home.css" rel="stylesheet">
 
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -126,12 +126,17 @@
   		 
 
   		<footer class="footer">
+        <hr>
+        <a href="/employee">Employees Sign in</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="/admin">Admin Sign in</a>
+        <hr>
   			<p>All Rights Reserved. &copy; <%= title %> 2015</p>
   		</footer>
 
   	</div> <!-- /container -->
   	<script src="/bower_components/jquery/dist/jquery.min.js"></script>
-  	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  	<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   	<script>
   	Date.prototype.toDateInputValue = (function() {
   	    var local = new Date(this);

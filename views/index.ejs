@@ -12,10 +12,10 @@
     <title><%= title %></title>
 
     <!-- Bootstrap core CSS -->
-    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="stylesheets/cover.css" rel="stylesheet">
+    <link href="/stylesheets/cover.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -39,7 +39,7 @@
                 <ul class="nav masthead-nav">
                   <li class="active"><a href="/">Home</a></li>
                   <li><a href="/signup">Sign up</a></li>
-                  <li><a href="/signin">Sign in</a></li>
+                  <li><a href="/signin">User Sign in</a></li>
                 </ul>
               </nav>
             </div>
@@ -55,6 +55,11 @@
 
           <div class="mastfoot">
             <div class="inner">
+              <hr>
+              <a href="/employee">Employees Sign in</a>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <a href="/admin">Admin Sign in</a>
+              <hr>
               <p>Your own advertisment Platform.</p>
               <p>All Rights Reserved. &copy; <%= title %> 2015</p>
             </div>
@@ -69,8 +74,8 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="bower_components/jquery/dist/jquery.min.js"><\/script>')</script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   </body>
 </html>
