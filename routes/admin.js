@@ -6,9 +6,9 @@ router.get('/', function(req, res){
 		query('SELECT id, name, email FROM employees;', 
 			[], function(err, rows, result){
 				if(err || result.rowCount === 0){
-					res.render('admin', { title: 'WebAdv Admin' , message : 'failed', name : 'Admin' });
+					res.render('admin', { title: 'Advertisement+' , message : 'failed', name : 'Admin' });
 				} else {
-					res.render('admin', { title: 'WebAdv' , data : rows, name : 'Admin'});
+					res.render('admin', { title: 'Advertisement+' , data : rows, name : 'Admin'});
 				}
 			});	
 
@@ -19,7 +19,7 @@ router.get('/sign_in', function(req, res){
 	if(req.session.admin){
 		res.redirect('/admin/');
 	} else {
-		res.render('admin_signin', {title : 'WebAdv Admin login', data: [], name: 'Admin Login'})
+		res.render('admin_signin', {title : 'Advertisement+', data: [], name: 'Admin Login'})
 	}
 });
 
@@ -29,7 +29,7 @@ router.post('/login', function(req, res, next) {
 	if(form.email && form.password){
 
 		if(form.email !== 'admin@admin.com' || form.password !== '123456'){
-			res.render('admin_signin', { title: 'WebAdv Admin Login' , error : 'Incorrect Combinations.'});
+			res.render('admin_signin', { title: 'Advertisement+' , error : 'Incorrect Combinations.'});
 		} else {
 			req.session.admin = {
 				name: 'Admin'
@@ -37,7 +37,7 @@ router.post('/login', function(req, res, next) {
 			res.redirect('/admin');
 		}
 
-	} else res.render('admin_signin', { title: 'WebAdv' , error : 'Missing Fields'});
+	} else res.render('admin_signin', { title: 'Advertisement+' , error : 'Missing Fields'});
 });
 
 router.post('/add_employee', function(req, res, next) {
@@ -48,12 +48,12 @@ router.post('/add_employee', function(req, res, next) {
 			[form.name, form.email, form.password], function(err, rows, result){
 				if(err) {
 					console.log(err);
-					res.render('admin', { title: 'WebAdv Admin' , error : 'Database Error! Please Try again'});
+					res.render('admin', { title: 'Advertisement+' , error : 'Database Error! Please Try again'});
 				}
 				else res.redirect('/admin');
 			});
 
-	} else res.render('admin', { title: 'WebAdv' , error : 'Missing Fields'});
+	} else res.render('admin', { title: 'Advertisement+' , error : 'Missing Fields'});
 });
 
 router.post('/edit_employee', function(req, res, next) {
@@ -64,12 +64,12 @@ router.post('/edit_employee', function(req, res, next) {
 			[form.name, form.email, form.password, form.id], function(err, rows, result){
 				if(err) {
 					console.log(err);
-					res.render('admin', { title: 'WebAdv Admin' , error : 'Database Error! Please Try again'});
+					res.render('admin', { title: 'Advertisement+' , error : 'Database Error! Please Try again'});
 				}
 				else res.redirect('/admin');
 			});
 
-	} else res.render('admin', { title: 'WebAdv' , error : 'Missing Fields'});
+	} else res.render('admin', { title: 'Advertisement+' , error : 'Missing Fields'});
 });
 
 router.post('/delete_employee', function(req, res, next) {
@@ -80,12 +80,12 @@ router.post('/delete_employee', function(req, res, next) {
 			[form.id], function(err, rows, result){
 				if(err) {
 					console.log(err);
-					res.render('admin', { title: 'WebAdv Admin' , error : 'Database Error! Please Try again'});
+					res.render('admin', { title: 'Advertisement+' , error : 'Database Error! Please Try again'});
 				}
 				else res.redirect('/admin');
 			});
 
-	} else res.render('admin', { title: 'WebAdv' , error : 'Missing Fields'});
+	} else res.render('admin', { title: 'Advertisement+' , error : 'Missing Fields'});
 });
 
 

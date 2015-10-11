@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.render('signin', { title: 'WebAdv' });
+  res.render('signin', { title: 'Advertisement+' });
 });
 
 router.post('/login', function(req, res, next) {
@@ -14,9 +14,9 @@ router.post('/login', function(req, res, next) {
 			[form.email, form.password], function(err, rows, result){
 				if(err) {
 					console.log(err);
-					res.render('signin', { title: 'WebAdv' , error : 'Database Error! Please Try again'});
+					res.render('signin', { title: 'Advertisement+' , error : 'Database Error! Please Try again'});
 				} else if(result.rowCount === 0){
-					res.render('signin', { title: 'WebAdv' , error : 'Incorrect Combinations.'});
+					res.render('signin', { title: 'Advertisement+' , error : 'Incorrect Combinations.'});
 				}
 				else {
 					req.session.user = {
@@ -27,7 +27,7 @@ router.post('/login', function(req, res, next) {
 				}
 			});
 
-	} else res.render('signin', { title: 'WebAdv' , error : 'Missing Fields'});
+	} else res.render('signin', { title: 'Advertisement+' , error : 'Missing Fields'});
 });
 
 

@@ -10,10 +10,10 @@ router.get('/', function(req, res, next) {
   		query('SELECT id, name, description, platforms, "to", "from" FROM campaigns WHERE user_id = $1;', 
   			[req.session.user.id], function(err, rows, result){
   				if(err || result.rowCount === 0){
-  					res.render('home', { title: 'WebAdv' , message : 'failed', name : req.session.user.name });
+  					res.render('home', { title: 'Advertisement+' , message : 'failed', name : req.session.user.name });
   				} else {
   					console.log(rows);
-  					res.render('home', { title: 'WebAdv' , data : rows, name : req.session.user.name});
+  					res.render('home', { title: 'Advertisement+' , data : rows, name : req.session.user.name});
   				}
   			});	
   	}
@@ -21,6 +21,9 @@ router.get('/', function(req, res, next) {
 
 router.get('/logout', function(req, res, next){
 	delete req.session.user;
+	if(req.session.admin){
+		delete req.session.admin;
+	}
 	res.redirect('/signin');
 });
 

@@ -17,12 +17,29 @@
     <!-- Custom styles for this template -->
     <link href="/stylesheets/cover.css" rel="stylesheet">
     <link href="/stylesheets/signin.css" rel="stylesheet">
-    <style>
-      body {
-        background-color: rgb(72, 15, 86) !important;
-      }
-    </style>
+    <link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>
+     <style>
+          body {
+            background: url('/images/sliderbg_02.png') no-repeat   center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+          }
 
+          .masthead-brand{
+            font-family: 'Orbitron', sans-serif;
+            font-size: 34px;
+            color: rgb(239, 237, 221);
+            font-weight: bold;
+          }
+
+          .inners{
+              background-color: rgba(0, 0, 0, 0.5);
+              padding: 10px;
+              border-radius: 15px;
+          }
+      </style>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -40,7 +57,10 @@
 
           <div class="masthead clearfix">
             <div class="inner">
-              <h3 class="masthead-brand"><%= title %></h3>
+              <h3 class="masthead-brand"><a href="/"><%= title %></a></h3>
+              <div class="pull-right">
+                <h4>For Admins</h4>
+              </div>
               <nav>
                 <ul class="nav masthead-nav">
                   
@@ -51,7 +71,7 @@
 
           <div class="">
   
-            <form class="form-signin" action="/admin/login" method="POST">
+            <form class="form-signin inners" action="/admin/login" method="POST">
               <%if (typeof message !== "undefined") { %>
                 <p class="text-success"><%= message %></p>
               <% } %>
@@ -60,7 +80,7 @@
               <% } %>
               <div class="notifications">
               </div>
-              <h2 class="form-signin-heading">Admin, Please sign in</h2>
+              <h2 class="form-signin-heading">Please sign in</h2>
               <label for="inputEmail" class="sr-only">Email address</label>
               <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
               <label for="inputPassword" class="sr-only">Password</label>
@@ -71,15 +91,11 @@
           </div> <!-- /container -->
 
           <div class="mastfoot">
-            <div class="inner">
-              <hr>
-              <a href="/employee">Employees Sign in</a>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <a href="/admin">Admin Sign in</a>
-              <hr>
-              <p>Your own advertisment Platform.</p>
-              <p>All Rights Reserved. &copy; <%= title %> 2015</p>
+            <div class="inner inners">              
+              <p><a href="/employee">Employees Zone</a> | <a href="/admin">Admin Panel</a></p>
+              <p>Your own advertisment Platform. All Rights Reserved. &copy; <%= title %> 2015</p>
             </div>
+            <br/>
           </div>
 
         </div>

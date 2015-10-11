@@ -6,10 +6,10 @@ router.get('/', function(req, res){
 		query('SELECT id, name, description, platforms, "to", "from" FROM campaigns WHERE TRUE;', 
 			[], function(err, rows, result){
 				if(err || result.rowCount === 0){
-					res.render('employee', { title: 'WebAdv' , message : 'failed', name : req.session.employee.name });
+					res.render('employee', { title: 'Advertisement+' , message : 'failed', name : req.session.employee.name });
 				} else {
 					console.log(rows);
-					res.render('employee', { title: 'WebAdv' , data : rows, name : req.session.employee.name});
+					res.render('employee', { title: 'Advertisement+' , data : rows, name : req.session.employee.name});
 				}
 			});	
 
@@ -20,7 +20,7 @@ router.get('/sign_in', function(req, res){
 	if(req.session.employee){
 		res.redirect('/employee/');
 	} else {
-		res.render('employee_signin', {title : 'WebAdv Employee login', data: [], name: 'Employee Login'})
+		res.render('employee_signin', {title : 'Advertisement+', data: [], name: 'Employee Login'})
 	}
 });
 
@@ -33,9 +33,9 @@ router.post('/login', function(req, res, next) {
 			[form.email, form.password], function(err, rows, result){
 				if(err) {
 					console.log(err);
-					res.render('employee_signin', { title: 'WebAdv' , error : 'Database Error! Please Try again'});
+					res.render('employee_signin', { title: 'Advertisement+' , error : 'Database Error! Please Try again'});
 				} else if(result.rowCount === 0){
-					res.render('employee_signin', { title: 'WebAdv Employee Login' , error : 'Incorrect Combinations.'});
+					res.render('employee_signin', { title: 'Advertisement+' , error : 'Incorrect Combinations.'});
 				}
 				else {
 					req.session.employee = {
@@ -45,7 +45,7 @@ router.post('/login', function(req, res, next) {
 					res.redirect('/employee');
 				}
 			});
-	} else res.render('employee_signin', { title: 'WebAdv' , error : 'Missing Fields'});
+	} else res.render('employee_signin', { title: 'Advertisement+' , error : 'Missing Fields'});
 });
 
 router.post('/add_employee', function(req, res, next) {
@@ -56,12 +56,12 @@ router.post('/add_employee', function(req, res, next) {
 			[form.name, form.email, form.password], function(err, rows, result){
 				if(err) {
 					console.log(err);
-					res.render('employee', { title: 'WebAdv Employee' , error : 'Database Error! Please Try again'});
+					res.render('employee', { title: 'Advertisement+' , error : 'Database Error! Please Try again'});
 				}
 				else res.redirect('/employee');
 			});
 
-	} else res.render('employee', { title: 'WebAdv' , error : 'Missing Fields'});
+	} else res.render('employee', { title: 'Advertisement+' , error : 'Missing Fields'});
 });
 
 router.post('/edit_campaign', function(req, res, next) {
@@ -72,12 +72,12 @@ router.post('/edit_campaign', function(req, res, next) {
 			[form.name, form.description, form.platforms, form.id], function(err, rows, result){
 				if(err) {
 					console.log(err);
-					res.render('employee', { title: 'WebAdv Employee' , error : 'Database Error! Please Try again'});
+					res.render('employee', { title: 'Advertisement+' , error : 'Database Error! Please Try again'});
 				}
 				else res.redirect('/employee');
 			});
 
-	} else res.render('employee', { title: 'WebAdv' , error : 'Missing Fields'});
+	} else res.render('employee', { title: 'Advertisement+' , error : 'Missing Fields'});
 });
 
 router.post('/delete_campaign', function(req, res, next) {
@@ -88,12 +88,12 @@ router.post('/delete_campaign', function(req, res, next) {
 			[form.id], function(err, rows, result){
 				if(err) {
 					console.log(err);
-					res.render('employee', { title: 'WebAdv Employee' , error : 'Database Error! Please Try again'});
+					res.render('employee', { title: 'Advertisement+' , error : 'Database Error! Please Try again'});
 				}
 				else res.redirect('/employee');
 			});
 
-	} else res.render('employee', { title: 'WebAdv' , error : 'Missing Fields'});
+	} else res.render('employee', { title: 'Advertisement+' , error : 'Missing Fields'});
 });
 
 
