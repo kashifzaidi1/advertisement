@@ -24,6 +24,9 @@ router.get('/logout', function(req, res, next){
 	if(req.session.admin){
 		delete req.session.admin;
 	}
+	if(req.session.employee){
+		delete req.session.employee;
+	}
 	res.redirect('/signin');
 });
 
